@@ -1,0 +1,6 @@
+{
+    "secret_id": "腾讯云管理控制台获取",
+    "secret_key": "腾讯云管理控制台获取",
+    "domain": "你的主域名，如sample.com",
+    "sub_domain": "你的解析记录，如www"
+}
