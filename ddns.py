@@ -5,7 +5,7 @@ import json
 import os
 import time
 import requests
-from datetime import datetime
+from datetime import datetime, timezone
 
 # 设置工作目录为脚本所在目录
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -46,8 +46,8 @@ def send_request(secret_id, secret_key, action, params):
     version = "2021-03-23"
     algorithm = "TC3-HMAC-SHA256"
     timestamp = int(time.time())
-    date = datetime.utcfromtimestamp(timestamp).strftime("%Y-%m-%d")
-
+    # date = datetime.utcfromtimestamp(timestamp).strftime("%Y-%m-%d")
+    date = datetime.fromtimestamp(timestamp, timezone.utc).strftime("%Y-%m-%d")
     # 拼接规范请求串
     http_request_method = "POST"
     canonical_uri = "/"
@@ -99,7 +99,7 @@ def send_request(secret_id, secret_key, action, params):
 
     # 打印响应
     if response.status_code == 200:
-        print("action=", action, "response=", response.json())
+        # print("action=", action, "response=", response.json())
         return response.json()  # 直接返回响应数据
     else:
         print("Request Failed with status code: ", response.status_code)
@@ -170,4 +170,5 @@ def main():
 
 
 if __name__ == "__main__":
+    print("Current system time:", datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     main()
